@@ -9,7 +9,7 @@ const ContactBar = () => {
       </a>
       <a href="https://www.linkedin.com/in/austinparks2/">
         <img
-          src={require("../../assets/linkedin-blue-style-logo-png-0_50x50.png")}
+          src={require("../../assets/linked.png")}
           alt="LinkedIn"
         ></img>
       </a>

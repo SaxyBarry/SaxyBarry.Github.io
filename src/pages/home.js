@@ -13,12 +13,12 @@ const Home = () => {
           scale: 1.1,
         }}
       >
-          <svg viewbox="0 0 100 60">
+          <svg >
             <defs>
               <mask id="mask" x="0" y="0" width="100" height="100">
                 <rect x="0" y="0" width="100%" height="100%" fill="#fff" />
                 <text
-                  text-anchor="middle"
+                  textAnchor="middle"
                   x="150"
                   y="70"
                   dy="1"
@@ -27,13 +27,13 @@ const Home = () => {
                   Austin Parks
                 </text>
                 <text
-                  text-anchor="middle"
+                  textAnchor="middle"
                   x="150"
                   y="120"
                   dy="1"
                   className="headerText2"
                 >
-                  Developer | Student
+                  Developer
                 </text>
               </mask>
             </defs>
@@ -43,7 +43,7 @@ const Home = () => {
               width="100%"
               height="100%"
               mask="url(#mask)"
-              fill-opacity=".75"
+              fillOpacity=".75"
               fill="#fbcaefff"
             />
           </svg>

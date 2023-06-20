@@ -1,14 +1,15 @@
-import './App.css';
+import "./App.css";
 import ContactBar from "./components/footer/contactbar";
-import About from "./pages/about";
+import Home from "./pages/home";
 import Experience from "./pages/experience";
-import Home from './pages/home';
+import TerminalController from "./pages/terminalController.js";
 function App() {
   return (
     <div>
       <div className="App">
         <Home />
-        <Experience />
+        {/* <Experience /> */}
+        <TerminalController />
         <ContactBar />
       </div>
     </div>
