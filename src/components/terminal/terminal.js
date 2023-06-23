@@ -21,12 +21,12 @@ export const Terminal = forwardRef((props, ref) => {
   const inputRef = useRef();
   const [input, setInputValue] = useState("");
 
-  /**
-   * Focus on the input whenever we render the terminal or click in the terminal
-   */
-  useEffect(() => {
-    inputRef.current?.focus();
-  });
+//   /**
+//    * Focus on the input whenever we render the terminal or click in the terminal
+//    */
+//   useEffect(() => {
+//     inputRef.current?.focus();
+//   });
 
   const focusInput = useCallback(() => {
     inputRef.current?.focus();
