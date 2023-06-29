@@ -1,25 +1,62 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Terminal } from "../components/terminal/terminal";
 import { useTerminal } from "../components/terminal/hooks";
 import xCircle from "../assets/x-circle.svg";
 import Typewriter from "typewriter-effect";
+import "../components/terminal/terminal.css";
+import Hal9000 from "../components/hal";
+
 
 function TerminalController() {
   const promptLabel = "guest@austinparks:~ $";
   const { history, pushToHistory, setTerminalRef, resetTerminal } = useTerminal();
+  const [isLightMode, setIsLightMode] = useState(false); 
+  const [isAnimationRunning, setAnimationRunning] = useState(false);
+
+  
+  const xClicked = () => {
+    if (!isAnimationRunning) {
+      console.log("Button clicked!");
+      setAnimationRunning(true);
+
+      setTimeout(async () => {
+        pushToHistory(
+          <>
+            <span className="terminal__prompt__label">{promptLabel}</span>{" "}
+            ERROR!ERROR!ERROR!
+            <br />
+            <Hal9000 />
+            <Typewriter
+              options={{ skipAddStyles: true, cursor: "", delay: 30 }}
+              onInit={(typewriter) => {
+                typewriter
+                  .typeString(
+                    "<span style=\"color: Red;\"><strong>I'm sorry GUEST I can't let you do that.</strong></span>"
+                  )
+                  .start();
+              }}
+            />
+          </>
+        );
+        setAnimationRunning(false);
+      }, 6000);
+    }
+  };
+
   useEffect(() => {
     resetTerminal();
     pushToHistory(
       <>
-          <Typewriter
-            options={{skipAddStyles: true, cursor:'', delay:30}}
-            onInit={(typewriter) => {
-              typewriter
-                .typeString(
-                  "<div><strong>Welcome!</strong> to Austin Parks' Portfolio.</div><div>Type `help` to see a list of commands</div><h2>&#x1F6D1; Warning! &#x1F6D1;</h2><h3>This website is under active construction, be sure to wear proper PPE.</h3>"
-                ).start();
-            }}
-          />
+        <Typewriter
+          options={{ skipAddStyles: true, cursor: "", delay: 30 }}
+          onInit={(typewriter) => {
+            typewriter
+              .typeString(
+                "<div><strong>Welcome!</strong> to Austin Parks' Portfolio.</div><div>Type `help` to see a list of commands</div><h2>&#x1F6D1; Warning! &#x1F6D1;</h2><h3>This website is under active construction, be sure to wear proper PPE.</h3>"
+              )
+              .start();
+          }}
+        />
       </>
     );
   }, []);
@@ -49,7 +86,7 @@ function TerminalController() {
               onInit={(typewriter) => {
                 typewriter
                   .typeString(
-                    '<div><span style= "font-size: 20px; color: green">The following commands can be used</span><ul><li>`skills`</li><li>`about`</li><li>`experience`</li></ul></div>'
+                    '<div><span style= "font-size: 20px; color: green">The following commands can be used</span><ul><li>`skills`</li><li>`about`</li><li>`experience`</li><li>`resume`</li><li>`lightson`</li><li>`lightsoff`</li></ul></div>'
                   )
                   .start();
               }}
@@ -69,6 +106,25 @@ function TerminalController() {
                 typewriter
                   .typeString(
                     '<div><h3 style= "font-size: 20px; color: green">Languages</h3><li>Python; Java; Scheme; Racket; C; Javascript; Swift; PHP; SQL; Bash; Go</li><h3 style= "font-size: 20px; color: green">Concepts</h3><li>Compilers; Interpreters; Data Structures; Databases; Firewalls; Networks; Network Security; Secure Policy Design; Logic; APIs; Distributed Systems Engineering; QA Testing</li><h3 style= "font-size: 20px; color: green">Tools</h3><li>Git; IntelliJ; VSCode; Microsoft Azure; MariaDB; CouchDB; ZeroMQ; RabbitMQ; Docker; Apache; Jira; Zendesk</li></div>'
+                  )
+                  .start();
+              }}
+            />
+          </>
+        );
+      },
+      resume: async () => {
+        await pushToHistory(
+          <>
+            <span className="terminal__prompt__label">{promptLabel}</span>{" "}
+            resume
+            <br></br>
+            <Typewriter
+              options={{ skipAddStyles: true, cursor: "", delay: 30 }}
+              onInit={(typewriter) => {
+                typewriter
+                  .typeString(
+                    '<div><a style= "font-size: 20px; padding: 5px; color: black; background-color: #fbcaefff;" className="resume-link" href="./resume.pdf" download="Austin Parks\' Resume.pdf">My Resume</a></div>'
                   )
                   .start();
               }}
@@ -112,7 +168,8 @@ function TerminalController() {
       experience: async () => {
         await pushToHistory(
           <>
-            <span className="terminal__prompt__label">{promptLabel}</span> experience
+            <span className="terminal__prompt__label">{promptLabel}</span>{" "}
+            experience
             <br></br>
             <Typewriter
               options={{ skipAddStyles: true, cursor: "", delay: 0 }}
@@ -173,24 +230,118 @@ guidance of highly respected industry professionals</li></ul>`
           </>
         );
       },
+      lightson: async (input) => {
+        const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+        if(!isLightMode){
+            await pushToHistory(
+            <>
+                <div>
+                <span className="terminal__prompt__label">{promptLabel}</span>{" "}
+                lightson
+                <br></br>
+                <Typewriter
+                    options={{ skipAddStyles: true, cursor: "", delay: 30 }}
+                    onInit={(typewriter) => {
+                    typewriter
+                        .typeString(
+                        '<span style="color: Green;"><strong>Turning the lights on</strong></span>'
+                        )
+                        .start();
+                    }}
+                />
+                </div>
+            </>
+            );
+            await delay(1500);
+            setIsLightMode(true);
+        }else{
+            await pushToHistory(
+              <>
+                <div>
+                  <span className="terminal__prompt__label">{promptLabel}</span>{" "}
+                  lightson
+                  <br></br>
+                  <Typewriter
+                    options={{ skipAddStyles: true, cursor: "", delay: 30 }}
+                    onInit={(typewriter) => {
+                      typewriter
+                        .typeString(
+                          '<span style="color: Green;"><strong>Lights already on</strong></span>'
+                        )
+                        .start();
+                    }}
+                  />
+                </div>
+              </>
+            );
+        }
+      },
+      lightsoff: async (input) => {
+        const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+        if(isLightMode){
+            await pushToHistory(
+            <>
+                <div>
+                <span className="terminal__prompt__label">{promptLabel}</span> lightsoff
+                <br></br>
+                <Typewriter
+                    options={{ skipAddStyles: true, cursor: "", delay: 30 }}
+                    onInit={(typewriter) => {
+                    typewriter
+                        .typeString(
+                        '<span style="color: Green;"><strong>Turning the lights off</strong></span>'
+                        )
+                        .start();
+                    }}
+                />
+                </div>
+            </>
+            );
+            await delay(1500);
+            setIsLightMode(false);
+        }else{
+            await pushToHistory(
+              <>
+                <div>
+                  <span className="terminal__prompt__label">{promptLabel}</span>{" "}
+                  lightsoff
+                  <br></br>
+                  <Typewriter
+                    options={{ skipAddStyles: true, cursor: "", delay: 30 }}
+                    onInit={(typewriter) => {
+                      typewriter
+                        .typeString(
+                          '<span style="color: Green;"><strong>Lights already off</strong></span>'
+                        )
+                        .start();
+                    }}
+                  />
+                </div>
+              </>
+            );
+        }
+      },
     }),
-    [pushToHistory]
+    [pushToHistory, isLightMode]
   );
 
   return (
-    <div className="terminalController">
+    <div className={`terminalController`}>
       <div className="screen-top">
         <img
           src={xCircle}
           alt="x-circle"
           className="x-icon"
+          onClick={xClicked}
         ></img>
       </div>
       <Terminal
+        classStyle={isLightMode ? "terminal light" : `terminal`}
         history={history}
         ref={setTerminalRef}
         promptLabel={promptLabel}
         commands={commands}
+        isAnimationRunning={isAnimationRunning}
       />
     </div>
   );

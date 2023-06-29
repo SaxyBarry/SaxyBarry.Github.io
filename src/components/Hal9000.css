@@ -1,0 +1,26 @@
+.hal-container {
+    width: 300px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hal-shape {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: silver;
+    position: relative;
+}
+
+.hal-eye {
+    width: 150px;
+    height: 150px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

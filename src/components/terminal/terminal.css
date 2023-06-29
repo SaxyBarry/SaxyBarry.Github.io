@@ -4,6 +4,8 @@
     background-color: black;
     width: 50%;
     color: #C4C4C4;
+    border-color: #C4C4C4;
+    border-width: 10px;
     padding: 35px 45px;
     font-size: 14px;
     line-height: 1.42;
@@ -77,3 +79,28 @@
 .terminal:not(:hover)::-webkit-scrollbar-thumb:vertical {
   min-height: 5px; /* Even smaller height of the scrollbar thumb when not being used */
 }
+
+/*Light Mode*/
+.terminal.light {
+    background: white;
+    color: black;
+    text-shadow: none;
+}
+.terminal.light .terminal__prompt__input input{
+        flex: 1;
+        width: 100%;
+        background-color: transparent;
+        color: black;
+        border: 0;
+        outline: none;
+        font-size: 14px;
+        line-height: 1.42;
+        font-family: 'IBM Plex Mono', Consolas, Menlo, Monaco, 'Courier New', Courier,
+            monospace;
+}
+.terminal.light .terminal__prompt__label {
+    flex: 0 0 auto;
+    color: #bab416;
+}
+
+/*Animation*/

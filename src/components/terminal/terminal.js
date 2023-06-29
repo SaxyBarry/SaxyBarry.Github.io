@@ -1,5 +1,4 @@
 import React from "react";
-import { motion } from "framer-motion";
 import {
   ForwardedRef,
   forwardRef,
@@ -9,13 +8,16 @@ import {
   useState,
 } from "react";
 import "./terminal.css";
+import { motion } from "framer-motion";
+import { Hidden } from "@material-ui/core";
 
 export const Terminal = forwardRef((props, ref) => {
   const {
     history = [],
     promptLabel = "|",
-
+    classStyle  = "terminal",
     commands = {},
+    isAnimationRunning = false
   } = props;
 
   const inputRef = useRef();
@@ -58,24 +60,30 @@ export const Terminal = forwardRef((props, ref) => {
   );
 
   return (
-    <div className="terminal" ref={ref} onClick={focusInput}>
-      {history.map((line, index) => (
-        <div className="terminal__line" key={`terminal-line-${index}-${line}`}>
-          {line}
+      <motion.div
+      initial={{ height: "500px" }}
+      animate={isAnimationRunning ? { height: "0px"} : { height: "500px" }}
+      transition={{ duration: 5 }}className={classStyle} ref={ref} onClick={focusInput}>
+        {history.map((line, index) => (
+          <div
+            className="terminal__line"
+            key={`terminal-line-${index}-${line}`}
+          >
+            {line}
+          </div>
+        ))}
+        <div className="terminal__prompt">
+          <div className="terminal__prompt__label">{promptLabel}</div>
+          <div className="terminal__prompt__input">
+            <input
+              type="text"
+              value={input}
+              onKeyDown={handleInputKeyDown}
+              onChange={handleInputChange}
+              ref={inputRef}
+            />
+          </div>
         </div>
-      ))}
-      <div className="terminal__prompt">
-        <div className="terminal__prompt__label">{promptLabel}</div>
-        <div className="terminal__prompt__input">
-          <input
-            type="text"
-            value={input}
-            onKeyDown={handleInputKeyDown}
-            onChange={handleInputChange}
-            ref={inputRef}
-          />
-        </div>
-      </div>
-    </div>
+      </motion.div>
   );
 });
